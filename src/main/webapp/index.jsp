@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -8,7 +10,7 @@
 <hr>
 <ul>
     <li><a href="users">Users</a></li>
-    <li><a href="meals">MealList</a> </li>
+    <li><a href="<c:url value='/mealsServlet?action=mealList'/>">MealList</a></li>
 </ul>
 </body>
 </html>
