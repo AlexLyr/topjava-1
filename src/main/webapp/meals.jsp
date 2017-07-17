@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +18,7 @@
     <c:forEach var="meal" items="${meals}">
         <tr style="color: ${meal.isExceed()?'red':'green'}"  align="center" valign="middle">
             <td>${meal.getDescription()}</td>
-            <td><javatime:format value="${meal.getDateTime()}" pattern="dd MMMM yyyy г."/></td>
+            <td>${meal.getFormattedDate()}</td>
             <td>${meal.getCalories()}</td>
         </tr>
     </c:forEach>

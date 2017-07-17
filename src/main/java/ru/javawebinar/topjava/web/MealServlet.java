@@ -18,13 +18,10 @@ import java.util.List;
 
 public class MealServlet extends HttpServlet {
     private static final Logger LOG= LoggerFactory.getLogger(MealServlet.class);
-    private static LocalTime startTime=LocalTime.of(0,0);
-    private static LocalTime endTime=LocalTime.of(23,0);
-    private static int caloriesPerDay=2000;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(),startTime,endTime,caloriesPerDay);
+        List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(),LocalTime.MIN,LocalTime.MAX,2000);
         LOG.debug("redirect to meals");
         req.setAttribute("meals",list);
         RequestDispatcher rd=getServletContext().getRequestDispatcher("/meals.jsp");
