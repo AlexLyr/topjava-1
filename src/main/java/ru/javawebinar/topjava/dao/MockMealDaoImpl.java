@@ -8,14 +8,14 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import java.time.LocalTime;
 import java.util.List;
 
-import java.util.concurrent.ConcurrentMap;
+import java.util.Map;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 
-public class MealDaoImpl implements MealDao {
-    private ConcurrentMap<Integer, Meal> map=MealsUtil.getMap();
-    private static final Logger LOG= getLogger(MealDaoImpl.class);
+public class MockMealDaoImpl implements MealDao {
+    private Map<Integer, Meal> map=MealsUtil.getMap();
+    private static final Logger LOG= getLogger(MockMealDaoImpl.class);
     @Override
     public void addMeal(Meal meal) {
         LOG.debug("add meal in map");

@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 import ru.javawebinar.topjava.dao.MealDao;
-import ru.javawebinar.topjava.dao.MealDaoImpl;
+import ru.javawebinar.topjava.dao.MockMealDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 
@@ -15,7 +15,7 @@ public class MealServiceImpl implements MealService {
      private MealDao mealDao;
 
     public MealServiceImpl() {
-        this.mealDao = new MealDaoImpl();
+        this.mealDao = new MockMealDaoImpl();
     }
 
     @Override

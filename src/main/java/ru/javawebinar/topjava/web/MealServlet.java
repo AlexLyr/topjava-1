@@ -26,8 +26,9 @@ public class MealServlet extends HttpServlet {
     private static final Logger LOG= LoggerFactory.getLogger(MealServlet.class);
     private MealService mealService;
 
-    public MealServlet() {
-        super();
+    @Override
+    public void init() throws ServletException {
+        super.init();
         mealService=new MealServiceImpl();
     }
 

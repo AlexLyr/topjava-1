@@ -32,12 +32,9 @@
     Description:<input type="text" name="description"
                        value="<c:out value="${meal.description}"/>"/> <br/>
     Calories:<input type="text" name="calories" value="<c:out value="${meal.calories}"/>"/> <br/>
-<c:if test="${!empty meal.id}">
-    <input type="submit" value="Edit"/>
-</c:if>
-<c:if test="${empty meal.id}">
-    <input type="submit" value="Add"/>
-</c:if>
+
+    <input type="submit" value="${!empty meal.id?'Edit':'Add'}"/>
+
 </form>
 </body>
 </html>

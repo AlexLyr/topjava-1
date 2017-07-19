@@ -22,10 +22,10 @@ public class MealsUtil {
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
 
-    private static ConcurrentMap<Integer,Meal> map=meals.stream()
+    private static Map<Integer,Meal> map=meals.stream()
                 .collect(Collectors.toConcurrentMap(Meal::getId,meal -> meal));
 
-    public static ConcurrentMap<Integer, Meal> getMap() {
+    public static Map<Integer, Meal> getMap() {
         return map;
     }
 
