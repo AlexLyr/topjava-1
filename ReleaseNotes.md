@@ -54,7 +54,7 @@
   - примеры запросов curl в `config/curl.md`
   - <a href="https://datatables.net/examples/styling/bootstrap.html">DataTables/Bootstrap 3 integration</a>
   - тесты на профиль деплоя Heroku (общее количество JUnit тестов стало 102)
-- удалил зависимость `jul-to-slf4j`
+- удалил зависимость `jul-ru.javawebinar.topjava.to-slf4j`
 - рефакторинг
   - переименовал все классы `UserMeal**` в `Meal**`, JSP
   - переименовал `LoggedUser` в `AuthorizedUser`

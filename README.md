@@ -89,11 +89,11 @@ Java Enterprise Online Project
 -  <a href="http://devcolibri.com/4274#t7">Java 8: Потоки</a>
 -  <a href="http://prologistic.com.ua/polnoe-rukovodstvo-po-java-8-stream.html">Pуководство по Java 8 Stream</a>
 -  <a href="http://habrahabr.ru/post/224593/">Лямбда-выражения в Java 8</a>
--  <a href="https://github.com/winterbe/java8-tutorial">A Guide to Java 8</a>
+-  <a href="https://github.com/winterbe/java8-tutorial">A Guide ru.javawebinar.topjava.to Java 8</a>
 -  <a href="http://habrahabr.ru/company/luxoft/blog/270383/">Шпаргалка Java Stream API</a>
 -  <a href="https://www.youtube.com/watch?v=hEyCK4ueBlc">Алексея Владыкин: Элементы функционального программирования в Java</a>
 -  <a href="https://www.youtube.com/watch?v=iD8H7cmxw_w">Yakov Fain о новом в Java 8</a>
--  <a href="http://stackoverflow.com/questions/28319064/java-8-best-way-to-transform-a-list-map-or-foreach">stream.map vs forEach</a>
+-  <a href="http://stackoverflow.com/questions/28319064/java-8-best-way-ru.javawebinar.topjava.to-transform-a-list-map-or-foreach">stream.map vs forEach</a>
 -  Дополнительно
    - [Сергей Куксенко — Stream API, часть 1](https://www.youtube.com/watch?v=O8oN4KSZEXE)
    - [Сергей Куксенко — Stream API, часть 2](https://www.youtube.com/watch?v=i0Jr2l3jrDA)
@@ -127,7 +127,7 @@ Java Enterprise Online Project
 - <a href="http://www.intuit.ru/studies/courses/1102/134/info">Основы работы с HTML/CSS/JavaScript</a>
 - <a href="http://itchief.ru/lessons/javascript/94-javascript-introduction">JavaScript - Основы</a>
 - <a href="http://learn.javascript.ru/first-steps">Основы JavaScript</a>
-- <a href="http://itchief.ru/lessons/bootstrap-3/19-introduction-to-twitter-bootstrap-3">Bootstrap 3 - Основы</a>
+- <a href="http://itchief.ru/lessons/bootstrap-3/19-introduction-ru.javawebinar.topjava.to-twitter-bootstrap-3">Bootstrap 3 - Основы</a>
 - <a href="http://anton.shevchuk.name/jquery/">jQuery для начинающих</a>
 
 #### Java (базовые вещи)
@@ -141,7 +141,7 @@ Java Enterprise Online Project
 - <a href="http://www.skipy.ru/technics/synchronization.html">Синхронизация потоков</a>
 - <a href="http://java67.blogspot.ru/2014/08/difference-between-string-literal-and-new-String-object-Java.html">String literal pool</a>
 - <a href="https://habrahabr.ru/post/132241/">Маленькие хитрости Java</a>
--  <a href="https://github.com/winterbe/java8-tutorial">A Guide to Java 8</a>
+-  <a href="https://github.com/winterbe/java8-tutorial">A Guide ru.javawebinar.topjava.to Java 8</a>
 
 ### Туториалы, разное
 [Что нужно знать о бэкенде новичку в веб-разработке](https://tproger.ru/translations/backend-web-development)
