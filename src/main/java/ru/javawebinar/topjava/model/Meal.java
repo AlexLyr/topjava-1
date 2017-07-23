@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Meal extends BaseEntity {
-   private Integer userId;
+   private int userId;
 
     private final LocalDateTime dateTime;
 
