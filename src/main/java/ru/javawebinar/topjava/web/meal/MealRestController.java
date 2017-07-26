@@ -19,7 +19,9 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 @Controller
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    private ProfileRestController profileRestController = new ProfileRestController();
+
+    @Autowired
+    private ProfileRestController profileRestController;
 
     @Autowired
     private MealService service;
@@ -27,17 +29,22 @@ public class MealRestController {
 
     public List<MealWithExceed> getAll() {
         log.info("getAll");
-        return MealsUtil.getWithExceeded(service.getAll(1), 2000);
+        return MealsUtil.getWithExceeded(service.getAll(profileRestController.get().getId()), 2000);
     }
 
     public Meal get(int id) {
         log.info("get {}", id);
-        return service.get(id, profileRestController.get().getId());
+        return service.get(id,profileRestController.get().getId());
     }
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
-        checkNew(meal);
+        try {
+            checkNew(meal);
+        }
+        catch (IllegalArgumentException e){
+            update(meal,meal.getId());
+        }
         return service.save(meal, profileRestController.get().getId());
     }
 
