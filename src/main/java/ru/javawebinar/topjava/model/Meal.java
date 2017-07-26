@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Meal extends BaseEntity {
-   private int userId;
+    private int userId;
 
     private final LocalDateTime dateTime;
 
@@ -22,22 +22,15 @@ public class Meal extends BaseEntity {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
-        this.userId=0;
+        this.userId = 0;
     }
+
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDateTime getDateTime() {

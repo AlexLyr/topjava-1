@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.user.ProfileRestController;
 
 import java.util.List;
 
@@ -18,34 +19,36 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 @Controller
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
+    private ProfileRestController profileRestController = new ProfileRestController();
 
     @Autowired
     private MealService service;
 
+
     public List<MealWithExceed> getAll() {
         log.info("getAll");
-        return MealsUtil.getWithExceeded(service.getAll(),2000);
+        return MealsUtil.getWithExceeded(service.getAll(1), 2000);
     }
 
     public Meal get(int id) {
         log.info("get {}", id);
-        return service.get(id);
+        return service.get(id, profileRestController.get().getId());
     }
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
         checkNew(meal);
-        return service.save(meal);
+        return service.save(meal, profileRestController.get().getId());
     }
 
     public void delete(int id) {
         log.info("delete {}", id);
-        service.delete(id);
+        service.delete(id, profileRestController.get().getId());
     }
 
     public void update(Meal meal, int id) {
         log.info("update {} with id={}", meal, id);
         checkIdConsistent(meal, id);
-        service.update(meal);
+        service.update(meal, profileRestController.get().getId());
     }
 }
