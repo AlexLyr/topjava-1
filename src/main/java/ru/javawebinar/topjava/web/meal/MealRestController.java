@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
@@ -25,9 +26,15 @@ public class MealRestController {
 
     @Autowired
     private MealService service;
+    private int userId;
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public List<MealWithExceed> getAll() {
+        profileRestController.setUserId(userId);
+        AuthorizedUser.setId(userId);
         log.info("getAll");
         return MealsUtil.getWithExceeded(service.getAll(profileRestController.get().getId()), 2000);
     }

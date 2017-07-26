@@ -70,6 +70,8 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
+                if(!(request.getParameter("userId")==null))
+                controller.setUserId(Integer.parseInt(request.getParameter("userId")));
                 request.setAttribute("meals", controller.getAll());
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
