@@ -12,9 +12,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by SPIDER on 31.07.2017.
- */
+
 public class MealRestControllerTest {
     private static MealRestController controller;
     private static ConfigurableApplicationContext appCtx;
