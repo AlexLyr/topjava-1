@@ -52,11 +52,10 @@ public class JdbcMealRepositoryImpl implements MealRepository {
             Number number = insertMeal.executeAndReturnKey(map);
             meal.setId(number.intValue());
         } else {
-            namedTemplate.update("UPDATE meals SET  user_id=:user_id, date_time=:date_time," +
+           int afRows= namedTemplate.update("UPDATE meals SET  user_id=:user_id, date_time=:date_time," +
                     " description=:description,calories=:calories WHERE id=:id AND user_id=:user_id", map);
 
-            int count=jdbcTemplate.queryForObject("SELECT COUNT (*) FROM meals WHERE user_id=? AND id=?",Integer.class,userId, meal.getId());
-            if(count==0)
+            if(afRows==0)
                 meal=null;
         }
         return meal;
