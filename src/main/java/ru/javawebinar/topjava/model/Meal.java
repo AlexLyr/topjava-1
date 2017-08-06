@@ -1,19 +1,23 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Entity
+@Table(name="meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"USER_ID","DATE_TIME"},name = "MEALS_UNIQUE_USER_DATETIME_IDX")})
 public class Meal extends BaseEntity {
+    @Column(name = "DATE_TIME")
     private LocalDateTime dateTime;
 
+    @Column(name = "DESCRIPTION")
     private String description;
-
+    @Column(name = "CALORIES")
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Meal() {
