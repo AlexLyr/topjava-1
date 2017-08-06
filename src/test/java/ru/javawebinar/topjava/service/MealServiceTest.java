@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.service;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.rules.TestName;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -35,9 +34,9 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 public class MealServiceTest {
 
     @Rule
-    public ExpectedException exception=ExpectedException.none();
+    public ExpectedException exception = ExpectedException.none();
     @Rule
-    public TestRule watcher = new TestWatcher(){
+    public TestRule watcher = new TestWatcher() {
         static final String ANSI_RESET = "\u001B[0m";
         static final String ANSI_GREEN = "\u001B[32m";
         static final String ANSI_RED = "\u001B[31m";
@@ -46,29 +45,31 @@ public class MealServiceTest {
 
         @Override
         protected void starting(Description description) {
-           start=new Date();
+            start = new Date();
         }
 
-        private void printSuccess(String name, long time){
-            System.out.println(ANSI_GREEN+String.format("%s finished in %d ms",name,time)+ANSI_RESET);
+        private void printSuccess(String name, long time) {
+            System.out.println(ANSI_GREEN + String.format("%s finished in %d ms", name, time) + ANSI_RESET);
         }
-        private void printFail(String name, long time){
-            System.out.println(ANSI_RED+String.format("%s failed in %d ms",name,time)+ANSI_RESET);
+
+        private void printFail(String name, long time) {
+            System.out.println(ANSI_RED + String.format("%s failed in %d ms", name, time) + ANSI_RESET);
         }
+
         @Override
         protected void succeeded(Description description) {
-            end=new Date();
-            String name=description.getMethodName();
-            long time=end.getTime()-start.getTime();
-            printSuccess(name,time);
+            end = new Date();
+            String name = description.getMethodName();
+            long time = end.getTime() - start.getTime();
+            printSuccess(name, time);
         }
 
         @Override
         protected void failed(Throwable e, Description description) {
-            end=new Date();
-            String name=description.getMethodName();
-            long time=end.getTime()-start.getTime();
-            printFail(name,time);
+            end = new Date();
+            String name = description.getMethodName();
+            long time = end.getTime() - start.getTime();
+            printFail(name, time);
         }
     };
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name="meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"USER_ID","DATE_TIME"},name = "MEALS_UNIQUE_USER_DATETIME_IDX")})
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"USER_ID", "DATE_TIME"}, name = "MEALS_UNIQUE_USER_DATETIME_IDX")})
 public class Meal extends BaseEntity {
     @Column(name = "DATE_TIME")
     private LocalDateTime dateTime;

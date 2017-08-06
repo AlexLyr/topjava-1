@@ -28,46 +28,45 @@ public class JpaMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
         User ref = entityManager.getReference(User.class, userId);
         meal.setUser(ref);
-        if(meal.isNew()) {
+        if (meal.isNew()) {
             entityManager.persist(meal);
             return meal;
-        }
-        else{
-           int count= entityManager.createQuery("UPDATE Meal m set m.dateTime=:dt,m.description=:dc,m.calories=:c WHERE m.id=:id and m.user.id=:user_id")
-                    .setParameter("dt",meal.getDateTime())
-                    .setParameter("dc",meal.getDescription())
-                    .setParameter("c",meal.getCalories())
-                    .setParameter("id",meal.getId())
-                    .setParameter("user_id",userId)
+        } else {
+            int count = entityManager.createQuery("UPDATE Meal m set m.dateTime=:dt,m.description=:dc,m.calories=:c WHERE m.id=:id and m.user.id=:user_id")
+                    .setParameter("dt", meal.getDateTime())
+                    .setParameter("dc", meal.getDescription())
+                    .setParameter("c", meal.getCalories())
+                    .setParameter("id", meal.getId())
+                    .setParameter("user_id", userId)
                     .executeUpdate();
-           if(count!=0)
-            return meal;
-           else return null;
+            if (count != 0)
+                return meal;
+            else return null;
         }
     }
 
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-      return  entityManager.createQuery("DELETE from Meal m where m.id=:id AND m.user.id=:user_id")
-                .setParameter("id",id)
-              .setParameter("user_id",userId)
-                .executeUpdate()!=0;
+        return entityManager.createQuery("DELETE from Meal m where m.id=:id AND m.user.id=:user_id")
+                .setParameter("id", id)
+                .setParameter("user_id", userId)
+                .executeUpdate() != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-       List<Meal> list=entityManager.createQuery("SELECT m from Meal m where m.id=:id AND m.user.id=:user_id",Meal.class)
-               .setParameter("id",id)
-               .setParameter("user_id",userId)
-               .getResultList();
-       return DataAccessUtils.singleResult(list);
+        List<Meal> list = entityManager.createQuery("SELECT m from Meal m where m.id=:id AND m.user.id=:user_id", Meal.class)
+                .setParameter("id", id)
+                .setParameter("user_id", userId)
+                .getResultList();
+        return DataAccessUtils.singleResult(list);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return entityManager.createQuery("SELECT m FROM Meal m where  m.user.id=:user_id",Meal.class)
-                .setParameter("user_id",userId)
+        return entityManager.createQuery("SELECT m FROM Meal m where  m.user.id=:user_id", Meal.class)
+                .setParameter("user_id", userId)
                 .getResultList().stream()
                 .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
@@ -75,10 +74,10 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return  entityManager.createQuery("SELECT m FROM Meal m where  m.user.id=:user_id",Meal.class)
-                .setParameter("user_id",userId)
+        return entityManager.createQuery("SELECT m FROM Meal m where  m.user.id=:user_id", Meal.class)
+                .setParameter("user_id", userId)
                 .getResultList().stream()
-                .filter(m->(DateTimeUtil.isBetween(m.getDateTime(),startDate,endDate)))
+                .filter(m -> (DateTimeUtil.isBetween(m.getDateTime(), startDate, endDate)))
                 .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
     }
