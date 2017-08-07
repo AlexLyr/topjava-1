@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.AfterClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,8 +19,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -32,6 +32,13 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+
+    private static List<String> list = new ArrayList<>();
+
+    @AfterClass
+    public static void printResults() {
+        list.forEach(System.out::println);
+    }
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -48,20 +55,12 @@ public class MealServiceTest {
             start = new Date();
         }
 
-        private void printSuccess(String name, long time) {
-            System.out.println(ANSI_GREEN + String.format("%s finished in %d ms", name, time) + ANSI_RESET);
-        }
-
-        private void printFail(String name, long time) {
-            System.out.println(ANSI_RED + String.format("%s failed in %d ms", name, time) + ANSI_RESET);
-        }
-
         @Override
         protected void succeeded(Description description) {
             end = new Date();
             String name = description.getMethodName();
             long time = end.getTime() - start.getTime();
-            printSuccess(name, time);
+            list.add(ANSI_GREEN + String.format("%s finished in %d ms", name, time) + ANSI_RESET);
         }
 
         @Override
@@ -69,7 +68,7 @@ public class MealServiceTest {
             end = new Date();
             String name = description.getMethodName();
             long time = end.getTime() - start.getTime();
-            printFail(name, time);
+            list.add(ANSI_RED + String.format("%s failed in %d ms", name, time) + ANSI_RESET);
         }
     };
 
@@ -110,6 +109,7 @@ public class MealServiceTest {
     public void testGetNotFound() throws Exception {
         exception.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);
+
     }
 
     @Test
@@ -136,5 +136,7 @@ public class MealServiceTest {
                 service.getBetweenDates(
                         LocalDate.of(2015, Month.MAY, 30),
                         LocalDate.of(2015, Month.MAY, 30), USER_ID));
+
     }
+
 }
