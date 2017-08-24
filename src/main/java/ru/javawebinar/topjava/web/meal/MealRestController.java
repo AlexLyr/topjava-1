@@ -4,6 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -29,36 +34,45 @@ public class MealRestController {
         this.service = service;
     }
 
-    public Meal get(int id) {
+
+    public Meal get( int id) {
         int userId = AuthorizedUser.id();
         log.info("get meal {} for userId={}", id, userId);
         return service.get(id, userId);
     }
 
-    public void delete(int id) {
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable("id") int id) {
         int userId = AuthorizedUser.id();
         log.info("delete meal {} for userId={}", id, userId);
         service.delete(id, userId);
+        return "redirect:/meals";
     }
 
-    public List<MealWithExceed> getAll() {
+    @RequestMapping(value = "meals", method = RequestMethod.GET)
+    public String getAll(Model model) {
         int userId = AuthorizedUser.id();
         log.info("getAll for userId={}", userId);
-        return MealsUtil.getWithExceeded(service.getAll(userId), AuthorizedUser.getCaloriesPerDay());
+        model.addAttribute("meals",MealsUtil.getWithExceeded(service.getAll(userId), AuthorizedUser.getCaloriesPerDay()));
+        return "meals";
     }
 
-    public Meal create(Meal meal) {
+    @RequestMapping(value = "create",method = RequestMethod.POST)
+    public String create(Meal meal) {
         int userId = AuthorizedUser.id();
         log.info("create {} for userId={}", meal, userId);
         checkNew(meal);
-        return service.create(meal, userId);
+        return "mealForm";
     }
 
-    public void update(Meal meal, int id) {
+    @RequestMapping(value = "update/{id}")
+    public String update(@PathVariable("id") int id,Model model) {
         int userId = AuthorizedUser.id();
+        Meal meal=service.get(id,userId);
         log.info("update {} with id={} for userId={}", meal, id, userId);
         assureIdConsistent(meal, id);
-        service.update(meal, userId);
+        model.addAttribute("meal",meal);
+        return "mealForm";
     }
 
     /**
