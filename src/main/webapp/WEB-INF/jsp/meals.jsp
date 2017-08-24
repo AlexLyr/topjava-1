@@ -30,7 +30,7 @@
         <button type="submit">Filter</button>
     </form>
     <hr/>
-    <a href="create">Add Meal</a>
+    <a href="form?action=create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>

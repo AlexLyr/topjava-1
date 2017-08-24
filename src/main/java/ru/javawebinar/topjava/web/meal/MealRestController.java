@@ -5,10 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -16,9 +14,13 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
@@ -57,11 +59,20 @@ public class MealRestController {
         return "meals";
     }
 
-    @RequestMapping(value = "create",method = RequestMethod.POST)
-    public String create(Meal meal) {
+    @RequestMapping(value = "meals/create",method = RequestMethod.POST)
+    public String create(@ModelAttribute("meal") Meal meal) {
         int userId = AuthorizedUser.id();
         log.info("create {} for userId={}", meal, userId);
-        checkNew(meal);
+        if(meal.getId()==null){
+            service.create(meal,userId);
+        }
+        return "redirect:/meals";
+    }
+
+    @RequestMapping(value = "form")
+    public String redirect(Model model){
+        Meal meal=new Meal(LocalDateTime.now(),"",0);
+        model.addAttribute("meal",meal);
         return "mealForm";
     }
 
