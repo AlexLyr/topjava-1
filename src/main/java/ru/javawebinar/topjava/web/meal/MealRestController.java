@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -66,25 +68,28 @@ public class MealRestController {
         if(meal.getId()==null){
             service.create(meal,userId);
         }
+        else{
+            log.info("update {} with id={} for userId={}", meal, meal.getId(), userId);
+           service.update(meal,userId);
+        }
         return "redirect:/meals";
     }
 
-    @RequestMapping(value = "form")
-    public String redirect(Model model){
-        Meal meal=new Meal(LocalDateTime.now(),"",0);
-        model.addAttribute("meal",meal);
+    @RequestMapping(value = "update")
+    public String update(@RequestParam("id") int id, Model model){
+        int userId = AuthorizedUser.id();
+        if(id==0) {
+            Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
+            model.addAttribute("meal",meal);
+        }
+        else{
+            Meal meal=service.get(id,userId);
+            assureIdConsistent(meal, id);
+            model.addAttribute("meal",meal);
+        }
         return "mealForm";
     }
 
-    @RequestMapping(value = "update/{id}")
-    public String update(@PathVariable("id") int id,Model model) {
-        int userId = AuthorizedUser.id();
-        Meal meal=service.get(id,userId);
-        log.info("update {} with id={} for userId={}", meal, id, userId);
-        assureIdConsistent(meal, id);
-        model.addAttribute("meal",meal);
-        return "mealForm";
-    }
 
     /**
      * <ol>Filter separately
@@ -92,11 +97,16 @@ public class MealRestController {
      *   <li>by time for every date</li>
      * </ol>
      */
-    public List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
+    @RequestMapping(value = "filter",method = RequestMethod.POST)
+    public String getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,Model model,HttpServletRequest request) {
         int userId = AuthorizedUser.id();
         log.info("getBetween dates({} - {}) time({} - {}) for userId={}", startDate, endDate, startTime, endTime, userId);
+       String sTime=request.getParameter("startTime");
+       String eTime=request.getParameter("endTime");
+       String sDate=request.getParameter("startDate");
+       String eDate=request.getParameter("endDate");
 
-        return MealsUtil.getFilteredWithExceeded(
+       List<MealWithExceed> list= MealsUtil.getFilteredWithExceeded(
                 service.getBetweenDates(
                         startDate != null ? startDate : DateTimeUtil.MIN_DATE,
                         endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId),
@@ -104,5 +114,7 @@ public class MealRestController {
                 endTime != null ? endTime : LocalTime.MAX,
                 AuthorizedUser.getCaloriesPerDay()
         );
+       model.addAttribute("meals",list);
+        return "meals";
     }
 }
