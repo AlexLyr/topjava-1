@@ -39,7 +39,7 @@ public class MealRestController {
     }
 
 
-    public Meal get( int id) {
+    public Meal get(int id) {
         int userId = AuthorizedUser.id();
         log.info("get meal {} for userId={}", id, userId);
         return service.get(id, userId);
@@ -57,35 +57,33 @@ public class MealRestController {
     public String getAll(Model model) {
         int userId = AuthorizedUser.id();
         log.info("getAll for userId={}", userId);
-        model.addAttribute("meals",MealsUtil.getWithExceeded(service.getAll(userId), AuthorizedUser.getCaloriesPerDay()));
+        model.addAttribute("meals", MealsUtil.getWithExceeded(service.getAll(userId), AuthorizedUser.getCaloriesPerDay()));
         return "meals";
     }
 
-    @RequestMapping(value = "meals/create",method = RequestMethod.POST)
+    @RequestMapping(value = "meals/create", method = RequestMethod.POST)
     public String create(@ModelAttribute("meal") Meal meal) {
         int userId = AuthorizedUser.id();
         log.info("create {} for userId={}", meal, userId);
-        if(meal.getId()==null){
-            service.create(meal,userId);
-        }
-        else{
+        if (meal.getId() == null) {
+            service.create(meal, userId);
+        } else {
             log.info("update {} with id={} for userId={}", meal, meal.getId(), userId);
-           service.update(meal,userId);
+            service.update(meal, userId);
         }
         return "redirect:/meals";
     }
 
     @RequestMapping(value = "update")
-    public String update(@RequestParam("id") int id, Model model){
+    public String update(@RequestParam("id") int id, Model model) {
         int userId = AuthorizedUser.id();
-        if(id==0) {
+        if (id == 0) {
             Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
-            model.addAttribute("meal",meal);
-        }
-        else{
-            Meal meal=service.get(id,userId);
+            model.addAttribute("meal", meal);
+        } else {
+            Meal meal = service.get(id, userId);
             assureIdConsistent(meal, id);
-            model.addAttribute("meal",meal);
+            model.addAttribute("meal", meal);
         }
         return "mealForm";
     }
@@ -93,20 +91,25 @@ public class MealRestController {
 
     /**
      * <ol>Filter separately
-     *   <li>by date</li>
-     *   <li>by time for every date</li>
+     * <li>by date</li>
+     * <li>by time for every date</li>
      * </ol>
      */
-    @RequestMapping(value = "filter",method = RequestMethod.POST)
-    public String getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,Model model,HttpServletRequest request) {
+    @RequestMapping(value = "filter", method = RequestMethod.POST)
+    public String getBetween(Model model, HttpServletRequest request) {
         int userId = AuthorizedUser.id();
+        LocalTime startTime=null, endTime=null;
+        LocalDate startDate=null,endDate=null;
+        if(!request.getParameter("startTime").equals("")&&!request.getParameter("endTime").equals("")) {
+             startTime = LocalTime.parse(request.getParameter("startTime"));
+             endTime = LocalTime.parse(request.getParameter("endTime"));
+        }
+        if(!request.getParameter("startDate").equals("")&&!request.getParameter("endDate").equals("")) {
+             startDate = LocalDate.parse(request.getParameter("startDate"));
+             endDate = LocalDate.parse(request.getParameter("endDate"));
+        }
         log.info("getBetween dates({} - {}) time({} - {}) for userId={}", startDate, endDate, startTime, endTime, userId);
-       String sTime=request.getParameter("startTime");
-       String eTime=request.getParameter("endTime");
-       String sDate=request.getParameter("startDate");
-       String eDate=request.getParameter("endDate");
-
-       List<MealWithExceed> list= MealsUtil.getFilteredWithExceeded(
+        List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(
                 service.getBetweenDates(
                         startDate != null ? startDate : DateTimeUtil.MIN_DATE,
                         endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId),
@@ -114,7 +117,7 @@ public class MealRestController {
                 endTime != null ? endTime : LocalTime.MAX,
                 AuthorizedUser.getCaloriesPerDay()
         );
-       model.addAttribute("meals",list);
+        model.addAttribute("meals", list);
         return "meals";
     }
 }
