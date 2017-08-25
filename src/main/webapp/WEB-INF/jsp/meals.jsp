@@ -4,12 +4,9 @@
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
-<head>
-    <title><spring:message code="meal.supertitle"/></title>
-
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h3><spring:message code="meal.title"/> </h3>
     <form method="post" action="filter">
@@ -60,5 +57,6 @@
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
