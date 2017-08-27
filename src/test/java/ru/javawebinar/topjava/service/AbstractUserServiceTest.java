@@ -11,6 +11,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
@@ -22,7 +23,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testCreate() throws Exception {
-        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
+        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.synchronizedSet(EnumSet.of(Role.ROLE_USER,Role.ROLE_ADMIN)));
         User created = service.create(newUser);
         newUser.setId(created.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, newUser, USER), service.getAll());

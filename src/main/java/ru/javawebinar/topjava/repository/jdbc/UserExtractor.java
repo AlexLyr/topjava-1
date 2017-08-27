@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class UserExtractor implements ResultSetExtractor<List<User>> {
     @Override
     public List<User> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-        Map<Integer, User> map = new HashMap<Integer, User>();
+        Map<Integer, User> map = new LinkedHashMap<>();
         User user;
         Set<Role> roles=null;
         Set<String> stringSetRoles = new HashSet<>();
