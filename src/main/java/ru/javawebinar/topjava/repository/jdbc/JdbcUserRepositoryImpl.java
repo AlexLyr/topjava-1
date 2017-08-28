@@ -58,6 +58,8 @@ public class JdbcUserRepositoryImpl implements UserRepository {
             namedParameterJdbcTemplate.update(
                     "UPDATE users SET name=:name, email=:email, password=:password, " +
                             "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", parameterSource);
+            String sql="UPDATE user_roles SET role=? WHERE user_id=?";
+            insertBatch(sql, user);
         }
         return user;
     }
@@ -96,8 +98,14 @@ public class JdbcUserRepositoryImpl implements UserRepository {
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                preparedStatement.setInt(1,user.getId());
-                preparedStatement.setString(2,roles.get(i));
+                if(!sql.contains("UPDATE")||sql.contains("update")|sql.contains("Update")) {
+                    preparedStatement.setInt(1, user.getId());
+                    preparedStatement.setString(2, roles.get(i));
+                }
+                else{
+                    preparedStatement.setInt(2,user.getId());
+                    preparedStatement.setString(1, roles.get(i));
+                }
             }
 
             @Override
@@ -118,4 +126,5 @@ public class JdbcUserRepositoryImpl implements UserRepository {
                 return ps;
             });*/
     }
+
 }
