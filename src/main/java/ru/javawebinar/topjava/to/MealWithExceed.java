@@ -1,19 +1,26 @@
 package ru.javawebinar.topjava.to;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 import java.time.LocalDateTime;
 
 public class MealWithExceed {
-    private final Integer id;
 
-    private final LocalDateTime dateTime;
+    private  Integer id;
 
-    private final String description;
+    private  LocalDateTime dateTime;
 
-    private final int calories;
+    private  String description;
 
-    private final boolean exceed;
+    private  int calories;
 
-    public MealWithExceed(Integer id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+    private  boolean exceed;
+
+
+    @JsonCreator
+    public MealWithExceed(@JsonProperty("id") Integer id,@JsonProperty("dateTime") LocalDateTime dateTime, @JsonProperty("description") String description, @JsonProperty("calories") int calories, @JsonProperty("exceed") boolean exceed) {
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;

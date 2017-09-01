@@ -4,12 +4,15 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import static org.springframework.format.annotation.DateTimeFormat.*;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -29,6 +32,7 @@ public class Meal extends AbstractBaseEntity {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
+    @DateTimeFormat(iso= ISO.DATE_TIME)
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
