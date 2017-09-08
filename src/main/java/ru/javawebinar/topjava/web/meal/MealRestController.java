@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static org.springframework.format.annotation.DateTimeFormat.*;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @RestController
 @RequestMapping(MealRestController.REST_URL)
@@ -58,7 +61,7 @@ public class MealRestController extends AbstractMealController {
     }
 
 
-    @GetMapping(value = "/filter",produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(value = "/filter",produces = MediaType.APPLICATION_JSON_VALUE)
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public List<MealWithExceed> getBetween(@RequestParam("startDateTime") @DateTimeFormat(iso = ISO.DATE_TIME)LocalDateTime startDateTime,
                                            @RequestParam("endDateTime") @DateTimeFormat(iso = ISO.DATE_TIME)LocalDateTime endDateTime) {
@@ -66,6 +69,15 @@ public class MealRestController extends AbstractMealController {
         LocalTime endTime=endDateTime.toLocalTime();
         LocalDate startDate=startDateTime.toLocalDate();
         LocalDate endDate=endDateTime.toLocalDate();
+        return super.getBetween(startDate, startTime, endDate, endTime);
+    }*/
+
+    @PostMapping(value = "/filter",consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> getBetween(HttpServletRequest request) {
+        LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+        LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+        LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+        LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
 }
