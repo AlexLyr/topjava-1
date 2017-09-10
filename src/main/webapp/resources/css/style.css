@@ -34,3 +34,10 @@ header, footer {
 .glyphicon {
     cursor: pointer;
 }
+
+.table-row-cell{
+    /*color: cadetblue;
+    font-size: 15px;*/
+    opacity: 0.2;
+    background-color: mintcream;
+}

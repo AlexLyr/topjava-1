@@ -34,7 +34,7 @@
                     </thead>
                     <c:forEach items="${users}" var="user">
                         <jsp:useBean id="user" scope="page" type="ru.javawebinar.topjava.model.User"/>
-                        <tr>
+                        <tr  <c:if test="${!user.enabled}">class="table-row-cell"</c:if>>
                             <td><c:out value="${user.name}"/></td>
                             <td><a href="mailto:${user.email}">${user.email}</a></td>
                             <td>${user.roles}</td>
@@ -43,6 +43,7 @@
                             <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
                             <td><a class="delete" id="${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                         </tr>
+                        </div>
                     </c:forEach>
                 </table>
             </div>

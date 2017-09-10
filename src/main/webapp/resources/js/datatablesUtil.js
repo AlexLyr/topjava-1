@@ -80,3 +80,20 @@ function failNoty(event, jqXHR, options, jsExc) {
         layout: "bottomRight"
     }).show();
 }
+
+function getChecked() {
+    $("input:checkbox").click(function(){
+        var ischecked = $(this).is(":checked");
+        var userId=$(this).attr("id");
+            $.ajax({
+                url: ajaxUrl+"/status/"+userId,
+                method: "POST",
+                data: {enabled:ischecked},
+                success: function(){
+                    updateTable();
+                    successNoty("Updated");
+                }
+            });
+        $.ajaxSetup({cache: false});
+    });
+}
