@@ -7,6 +7,10 @@ function makeEditable() {
         save();
         return false;
     });
+    $("#detailsForm2").submit(function () {
+       sort();
+       return false;
+    });
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
@@ -16,9 +20,24 @@ function makeEditable() {
     $.ajaxSetup({cache: false});
 }
 
+
+function sort(){
+    var form=$("#detailsForm2");
+    $.ajax({
+      url: ajaxUrl+"/filter",
+        type: "GET",
+        data: form.serialize(),
+        success: function () {
+            //updateTable();
+            successNoty("Filtered");
+        }
+    })
+}
+
 function add() {
     $("#detailsForm").find(":input").val("");
     $("#editRow").modal();
+
 }
 
 function deleteRow(id) {

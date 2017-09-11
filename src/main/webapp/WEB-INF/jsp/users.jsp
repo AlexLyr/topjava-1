@@ -43,9 +43,11 @@
                             <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
                             <td><a class="delete" id="${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                         </tr>
-                        </div>
                     </c:forEach>
                 </table>
+                        </div>
+
+
             </div>
         </div>
     </div>

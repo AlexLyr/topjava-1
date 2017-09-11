@@ -15,7 +15,7 @@
                 <h3><spring:message code="meal.title"/></h3>
                 <br/>
 
-                <form method="post" action="meals/filter">
+                <form id="detailsForm2">
                     <dl>
                         <dt><spring:message code="meal.startDate"/>:</dt>
                         <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -47,7 +47,8 @@
                             <th><spring:message code="meal.dateTime"/></th>
                             <th><spring:message code="meal.description"/></th>
                             <th><spring:message code="meal.calories"/></th>
-                            <th colspan="2"><spring:message code="common.actions"/></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <c:forEach items="${meals}" var="meal">
