@@ -30,7 +30,7 @@ public class MealAjaxController extends AbstractMealController {
         super.delete(id);
     }
 
-    @PostMapping()
+    @PostMapping
     public void createOrUpdate(@RequestParam(value = "id", required = false) Integer id,
                               @DateTimeFormat(iso = ISO.DATE_TIME) @RequestParam("dateTime")LocalDateTime dateTime,
                                @RequestParam("description") String description,
