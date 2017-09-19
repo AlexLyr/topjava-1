@@ -55,10 +55,17 @@ public abstract class AbstractMealController {
         service.update(meal, userId);
     }
 
+    public void update(MealWithExceed mealWithExceed, int id) {
+        int userId = AuthorizedUser.id();
+        assureIdConsistent(mealWithExceed, id);
+        log.info("update {} for User {}", mealWithExceed, userId);
+        service.update(mealWithExceed, userId);
+    }
+
     /**
      * <ol>Filter separately
-     *   <li>by date</li>
-     *   <li>by time for every date</li>
+     * <li>by date</li>
+     * <li>by time for every date</li>
      * </ol>
      */
     public List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
