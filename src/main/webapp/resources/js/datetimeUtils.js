@@ -1,6 +1,7 @@
-/*$(function () {
+$(function () {
  $('#datetimepicker1').datetimepicker();
- });*/
+ });
+
 
 /*
  $(document).on("focusin","input[type=text]", function () {
@@ -8,7 +9,9 @@
  autoclose: true,
  format: 'yyyy-mm-dd'
  });
- });*/
+ });
+
 $(document).on("focusin", "input[type=text]", function () {
     $('#datetimepicker1').datetimepicker();
 });
+*/

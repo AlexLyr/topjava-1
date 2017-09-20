@@ -20,7 +20,7 @@ public class MealWithExceed extends BaseTo implements Serializable {
 
     @NotBlank
     private String description;
-    @NotNull
+    @NotNull(message = "calories field must be not blank")
     private int calories;
 
     @NotNull

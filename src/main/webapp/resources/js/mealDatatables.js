@@ -65,7 +65,7 @@ $(function () {
         ],
 
         "createdRow": function (row, data, dataIndex) {
-            $(row).addClass("exceeded");
+            $(row).addClass(data.exceed?"exceeded":"normal");
         },
 
         "initComplete": makeEditable

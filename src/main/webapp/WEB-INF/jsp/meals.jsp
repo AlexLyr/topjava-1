@@ -20,11 +20,12 @@
                     <div class="panel-body">
                         <form class="form-horizontal" id="filter">
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="startDate"><spring:message
+                                <label class="control-label col-sm-2" for="startDate><spring:message
                                         code="meal.startDate"/>:</label>
 
                                 <div class="col-sm-4">
                                     <input class="form-control" type="date" name="startDate" id="startDate">
+
                                 </div>
 
                                 <label class="control-label col-sm-3" for="startTime"><spring:message
