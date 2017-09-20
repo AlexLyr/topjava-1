@@ -20,7 +20,7 @@
                     <div class="panel-body">
                         <form class="form-horizontal" id="filter">
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="startDate><spring:message
+                                <label class="control-label col-sm-2" for="startDate"><spring:message
                                         code="meal.startDate"/>:</label>
 
                                 <div class="col-sm-4">
@@ -97,14 +97,14 @@
                                 code="meal.dateTime"/></label>
 
                         <div class="col-xs-9">
-                            <%-- <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
-                                    placeholder="<spring:message code="meal.dateTime"/>">--%>
-                            <div class="input-group date" id="datetimepicker1">
+                             <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                                    placeholder="<spring:message code="meal.dateTime"/>">
+                            <%--<div class="input-group date" id="datetimepicker1">
                                 <input type="text" class="form-control"/>
                                 <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                    </span>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                     <div class="form-group">
