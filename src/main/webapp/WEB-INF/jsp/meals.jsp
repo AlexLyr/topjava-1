@@ -97,14 +97,14 @@
                                 code="meal.dateTime"/></label>
 
                         <div class="col-xs-9">
-                             <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
-                                    placeholder="<spring:message code="meal.dateTime"/>">
-                            <%--<div class="input-group date" id="datetimepicker1">
-                                <input type="text" class="form-control"/>
+                            <%-- <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                                    placeholder="<spring:message code="meal.dateTime"/>">--%>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" id="datetimepicker1" name="datetimepicker1" placeholder="<spring:message code="meal.dateTime"/>"/>
                                 <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                    </span>
-                            </div>--%>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
