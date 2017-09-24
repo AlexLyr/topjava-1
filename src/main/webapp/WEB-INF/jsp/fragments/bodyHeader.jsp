@@ -25,8 +25,8 @@
                 </li>
                 <%-- <jsp:include page="WEB-INF/jsp/fragments/localization.jsp"/> dont see this page, i dont know why!!--%>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b
-                            class="glyphicon glyphicon-arrow-down">${pageContext.response.locale}</b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b>${pageContext.response.locale}</b>
+                        <span class="glyphicon glyphicon-arrow-down"></span></a>
                     <ul class="dropdown-menu">
                         <li><a onclick="switchLocale('en')">English</a></li>
                         <li><a onclick="switchLocale('ru')">Русский</a></li>
