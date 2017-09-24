@@ -4,14 +4,17 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.Month;
 import java.util.Arrays;
 
+import static java.time.LocalDateTime.of;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,6 +32,39 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MealService service;
+
+    @Test
+    public void testUpdateInvalid() throws Exception {
+        Meal meal = new Meal(MEAL1_ID, null, null, 10000);
+        mockMvc.perform(put(REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(meal))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testCreateInvalid() throws Exception {
+        Meal created = getCreated();
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    /*@Test
+    public void testDatetimeDuplicate() throws Exception {
+        Meal created = new Meal(null, of(2015, Month.MAY, 30, 10, 0), "Обед", 500);
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }*/
 
     @Test
     public void testGet() throws Exception {

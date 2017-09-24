@@ -24,6 +24,37 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = AdminRestController.REST_URL + '/';
 
     @Test
+    public void testUpdateInvalid() throws Exception {
+        User user = new User(USER_ID, "User", null, "password", 2005, Role.ROLE_USER);
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(user))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testCreateInvalid() throws Exception {
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(NEW_USER))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    /*@Test
+    public void testCreateDuplicate()throws Exception{
+        User newUser=new User(null, "New", "admin@gmail.com", "newPass", 2300, Role.ROLE_USER);
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newUser))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }*/
+    @Test
     public void testGet() throws Exception {
         mockMvc.perform(get(REST_URL + ADMIN_ID)
                 .with(userHttpBasic(ADMIN)))
